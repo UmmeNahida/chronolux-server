@@ -10,18 +10,16 @@ const port = 5000
 let server: Server;
 
 const startServer = async () => {
-
     try {
-        
         await mongoose.connect(envVars.DB_Url);
         console.log('mongoose connected successfully')
-        console.log(envVars.DB_Url)
         server = app.listen(port, () => {
             console.log(`Example app listening on port ${port}`)
         })
 
     } catch (err) {
         console.log(err)
+        process.exit(1);
     }
 }
 
@@ -29,8 +27,6 @@ const startServer = async () => {
    await startServer();
 }
 )()
-
-
 
 process.on('SIGTERM',()=>{
 
