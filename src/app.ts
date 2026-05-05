@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors"
 import cookieParser from "cookie-parser";
 import httpStatus from "http-status-codes"
+import { routes } from "./app/routes/routes";
 const app = express()
 
 
@@ -12,12 +13,12 @@ app.use(cors({
 }))
 
 
-
+// route endpoint
+app.use('/api/v1',routes)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
-
 
 app.use((req:Request, res:Response)=>{
   res.status(httpStatus.NOT_FOUND).json({
