@@ -45,8 +45,6 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
     }
 
     )(req, res, next)
-
-
     // console.log(users)
 })
 
@@ -104,7 +102,7 @@ const getRefreshToken = catchAsync(async (req: Request, res: Response, next: Nex
 })
 
 
-export const authController = {
+export const authController ={
     credentialsLogin,
     getRefreshToken,
     logout
