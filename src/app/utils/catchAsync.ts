@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { envVars } from "../confic/env"
+import { envVars } from "../config/env"
 
 
 

@@ -1,5 +1,6 @@
 
-import { envVars } from "../confic/env"
+// import { envVars } from "../confic/env"
+import { envVars } from "../config/env"
 import { IUser } from "../modules/users/user.interface"
 import { generateToken } from "./jwt"
 
