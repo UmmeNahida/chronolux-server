@@ -12,7 +12,33 @@ const getProducts = async()=>{
 }
 
 
+const productDetails = async(id:string)=>{
+  const product = await Product.findById(id)
+
+  return product
+}
+
+
+const updateProduct = async(id:string | string[], updateInfo:any)=>{
+  const product = await Product.findByIdAndUpdate(
+      id,
+      updateInfo,
+      {new: true}
+    );
+
+  return product
+}
+
+const deletedProduct = async(req:any)=>{
+  const product = await Product.findByIdAndDelete(req.params.id)
+
+  return product
+}
+
 export const productServices = {
   createProduct,
-  getProducts
+  getProducts,
+  productDetails,
+  updateProduct,
+  deletedProduct
 }
