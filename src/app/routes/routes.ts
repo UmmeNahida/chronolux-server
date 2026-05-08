@@ -5,11 +5,11 @@ export const routes = Router();
 
 const moduleRoutes = [
   {
-    path: "auth",
+    path: "/auth",
     route: authRoute,
   },
   {
-    path: "product",
+    path: "/product",
     route: authRoute,
   },
 ];
