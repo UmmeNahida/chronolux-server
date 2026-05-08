@@ -42,11 +42,7 @@ export const getSingleProduct = async (req: Request, res: Response) => {
 
 // update 
 export const updateProduct = async (req: Request, res: Response) => {
-  const product = await Product.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
+  const product = await productServices.updateProduct(req.params.id, req.body)
 
   sendResponse(res, {
     success:true,
@@ -58,7 +54,12 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 //delete
 export const deleteProduct = async (req: Request, res: Response) => {
-  await Product.findByIdAndDelete(req.params.id);
+    await productServices.deletedProduct(req)
 
-  res.json({ message: "Deleted successfully" });
+    sendResponse(res, {
+    success:true,
+    statusCode: httpStatus.OK,
+    data:null,
+    message: "product has been deleted"
+  })
 };
