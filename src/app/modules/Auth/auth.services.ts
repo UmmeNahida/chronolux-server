@@ -8,7 +8,26 @@ import { Users } from "../users/user.model";
 import AppError from "../../ErrorHandler/appErrors";
 import { envVars } from "../../config/env";
 
+const addUser = async (payload: any) => {
+  const { email, password, ...rest } = payload;
+  // console.log("addUserPayload",payload)
 
+  const exceedUser = await Users.findOne({ email })
+
+  if (exceedUser) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User already exceed")
+  }
+
+  const hashedPassword = await bcryptjs.hash(password as string, Number(envVars.becrypt_salt_round))
+
+  const addUser = await Users.create({
+    email,
+    password: hashedPassword,
+    ...rest
+  })
+
+  return addUser
+}
 
 const credentialsLogin = async(payload: Partial<IUser>)=>{
    const {email,password} = payload;
@@ -131,6 +150,7 @@ const changePassword = async (oldPassword: string, newPassword: string, decodedT
 
 
 export const authService = {
+    addUser,
     credentialsLogin,
-    getNewRefreshToken
+    getNewRefreshToken,
 }
