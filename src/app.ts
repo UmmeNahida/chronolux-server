@@ -17,7 +17,7 @@ app.use(cors({
 app.use('/api/v1',routes)
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('chonolux server is running!')
 })
 
 app.use((req:Request, res:Response)=>{
