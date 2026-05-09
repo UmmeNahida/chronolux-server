@@ -3,11 +3,22 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes"
-import passport from "passport";
 import AppError from "../../ErrorHandler/appErrors";
 import { createUserTokens } from "../../utils/userToken";
 import { authService } from "./auth.services";
 import { setAuthCookie } from "../../utils/setCookie";
+import passport from "passport";
+
+const createUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const user = await authService.addUser(req.body)
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.CREATED,
+        message: "user created successfully",
+        data: user
+    })
+})
 
 const credentialsLogin = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
@@ -103,6 +114,7 @@ const getRefreshToken = catchAsync(async (req: Request, res: Response, next: Nex
 
 
 export const authController ={
+    createUser,
     credentialsLogin,
     getRefreshToken,
     logout
