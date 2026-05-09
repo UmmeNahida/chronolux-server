@@ -3,6 +3,8 @@ import cors from "cors"
 import cookieParser from "cookie-parser";
 import httpStatus from "http-status-codes"
 import { routes } from "./app/routes/routes";
+import "./app/config/passport";
+import passport from "passport";
 const app = express()
 
 
@@ -11,6 +13,10 @@ app.use(express.json())
 app.use(cors({
   origin:["http://localhost:5173"]
 }))
+
+
+// passport middlewares after session
+app.use(passport.initialize())
 
 
 // route endpoint
