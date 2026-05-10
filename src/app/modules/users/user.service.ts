@@ -3,11 +3,7 @@ import { IUser } from "./user.interface";
 import { Users } from "./user.model";
 import httpStatus from "http-status-codes"
 import becryptjs from "bcryptjs"
-import { envVars } from "../../confic/env";
-import { Ride } from "../Ride/ride.model";
-import { exitToruQuery, searchField } from "../../utils/constand";
-import { QueryModel } from "../../utils/QueryBuilder";
-
+import { envVars } from "../../config/env";
 
 
 const addUser = async (payload: Partial<IUser>) => {
@@ -85,87 +81,6 @@ const allUsers = async (query: any) => {
 
 }
 
-const allDrivers = async () => {
-
-  const users = await Users.find({ role: 'DRIVER' }).sort({ createdAt: -1 });
-
-  return users
-
-}
-
-// old allride
-// const allRide = async (query: Record<string,string>) => {
-
-//   const searchTerm = query.searchTerm || "";
-//   const status = query.status || null || "";
-//   const sort = query.sort || "-createdAt";
-//   const minFare = query.minFare ? Number(query.minFare) : 0;
-//   const maxFare = query.maxFare ? Number(query.maxFare) : Infinity
-//   const page = Number(query.page) || 1;
-//   const limit = Number(query.limit) || 5;
-//   const skip = (page - 1) * limit;
-
-//   // //--------------------------- this fil filtering will be used when you dont need to all property------------
-//   // const select = query.select.split(",").join(" ") || "";
-
-//   for (const field of exitToruQuery) {
-//     delete query[field]
-//   }
-
-
-
-//   const allUsers = await Ride.find({
-//     $or: [
-//       { status: { $regex: status, $options: "i" } },
-//       { fare: { $gte: minFare, $lte: maxFare } },
-//       { "pickupLocation.address": { $regex: searchTerm, $options: "i" } },
-//       { "destinationLocation.address": { $regex: searchTerm, $options: "i" } },
-//     ]
-//   }
-
-//   ).find(query).sort(sort).skip(skip).limit(limit);
-
-//   const totalDivision = await Users.countDocuments()
-//   const totalPage = Math.ceil(totalDivision / limit);
-//   return {
-//     data: allUsers,
-//     meta: {
-//       page: page,
-//       limit: limit,
-//       totalPage: totalPage,
-//       total: totalDivision
-//     }
-//   }
-
-// }
-const allRide = async (query: Record<string, string>) => {
-
-  console.log("qery", query)
-  const queryBuilder = new QueryModel(Ride.find(), query)
-  const rideResult = await queryBuilder
-    .search(searchField)
-    .filter()
-    .sort()
-    .pagination()
-    .populate(["rider", "driver"])
-    .build()
-
-  const metaData = await queryBuilder.getMeta()
-
-  // const queryExecuted = await Promise.all([
-  //     queryBuilder.build(),
-  //     queryBuilder.getMeta()
-  // ])
-
-  // console.log(queryExecuted)
-  return {
-    data: rideResult,
-    meta: metaData
-  }
-
-}
-
-
 const blockUser = async (userId: string) => {
   const user = await Users.findByIdAndUpdate(
     userId,
@@ -197,67 +112,10 @@ const unblockUser = async (userId: string) => {
 }
 
 
-
-const analyticsUser = async () => {
-
-  const totalUsers = await Users.countDocuments();
-  const totalRiders = await Users.countDocuments({ role: 'RIDER' });
-  const totalDrivers = await Users.countDocuments({ role: 'DRIVER' });
-  const totalAdmins = await Users.countDocuments({ role: 'ADMIN' });
-
-  return {
-    totalUsers,
-    totalAdmins, totalDrivers, totalRiders
-  }
-
-}
-
-// analytics all rides 
-const analyticsRide = async () => {
-
-  const totalRides = await Ride.countDocuments();
-  const completedRides = await Ride.countDocuments({ status: 'completed' });
-  const cancelledRides = await Ride.countDocuments({ status: 'cancelled' });
-  const inProgressRides = await Ride.countDocuments({ status: 'picked_up' });
-  const requestedRides = await Ride.countDocuments({ status: 'requested' });
-  const acceptedRides = await Ride.countDocuments({ status: 'accepted' });
-
-  // previos week in rides
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-  const ridesThisWeek = await Ride.countDocuments({
-    createdAt: { $gte: oneWeekAgo }
-  });
-
-  // previos monthe in rides
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-  const ridesThisMonth = await Ride.countDocuments({
-    createdAt: { $gte: oneMonthAgo }
-  });
-
-  return {
-    totalRides,
-    completedRides,
-    cancelledRides,
-    requestedRides,
-    acceptedRides,
-    inProgressRides,
-    ridesThisMonth,
-    ridesThisWeek
-  }
-
-}
-
-
 export const userService = {
   addUser,
   updateProfile,
   allUsers,
   blockUser,
-  unblockUser,
-  allDrivers,
-  allRide,
-  analyticsUser,
-  analyticsRide
+  unblockUser
 }
