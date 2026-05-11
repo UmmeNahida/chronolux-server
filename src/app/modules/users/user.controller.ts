@@ -28,17 +28,6 @@ const updateProfile = catchAsync(async (req: Request, res: Response, next: NextF
     })
 })
 
-const allUsers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-
-    const users = await userService.allUsers(req.query as any)
-    sendResponse(res, {
-        success: true,
-        statusCode: httpStatus.CREATED,
-        message: "all users retrieved successfully",
-        data: users
-    })
-})
-
 const blockUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     console.log(req.params)
     const userId = req.params.id as string;
@@ -68,7 +57,6 @@ const unblockUser = catchAsync(async (req: Request, res: Response, next: NextFun
 });
 export const userController = {
     createUser,
-    allUsers,
     blockUser,
     unblockUser,
     updateProfile
