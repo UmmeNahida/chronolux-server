@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { number } from "zod";
 
 const productSchema = new mongoose.Schema({
   name: String,
@@ -9,6 +10,7 @@ const productSchema = new mongoose.Schema({
   image: String,
   brand: String,
   model: String,
+  rating: number,
   review: String
 }, { timestamps: true });
 
