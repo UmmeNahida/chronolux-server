@@ -8,7 +8,7 @@ const router = Router();
 
 router.post('/create',createProduct)
 router.post('/',getProducts)
-router.get("/details/:id", getSingleProduct);
+router.get("/:id", getSingleProduct);
 router.patch("/update/:id", checkAuth("admin"), updateProduct);
 router.delete("/delete/:id", checkAuth("admin"), deleteProduct);
 
