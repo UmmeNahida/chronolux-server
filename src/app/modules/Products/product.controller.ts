@@ -18,7 +18,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
 // get all products 
 export const getProducts = async (req: Request, res: Response) => {
-  const products = await productServices.getProducts();
+  const products = await productServices.getProducts(req.query);
 
    sendResponse(res, {
     success:true,
