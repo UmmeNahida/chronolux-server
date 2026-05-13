@@ -1,6 +1,7 @@
+import { productInterface } from "./product.interface";
 import { Product } from "./product.model"
 
-const createProduct = async(item:strig)=>{
+const createProduct = async(item: productInterface)=>{
   const saveProduct = await Product.create(item)
   return saveProduct
 }
