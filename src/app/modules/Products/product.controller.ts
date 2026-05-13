@@ -16,7 +16,7 @@ export const createProduct = async (req: Request, res: Response) => {
   })
 };
 
-// get all products 
+// get all products route
 export const getProducts = async (req: Request, res: Response) => {
   const products = await productServices.getProducts(req.query);
 
