@@ -6,7 +6,7 @@ const createProduct = async(item: productInterface)=>{
   return saveProduct
 }
 
-const getProducts = async (query: any) => {
+const getProducts = async (query: Partial<productInterface>) => {
   const { category, minPrice, maxPrice, rating, startDate, endDate } = query;
 
   const filter: any = {};
