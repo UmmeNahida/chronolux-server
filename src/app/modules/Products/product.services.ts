@@ -1,6 +1,6 @@
 import { Product } from "./product.model"
 
-const createProduct = async(item:any)=>{
+const createProduct = async(item:strig)=>{
   const saveProduct = await Product.create(item)
   return saveProduct
 }
