@@ -6,7 +6,7 @@ const createProduct = async(item: productInterface)=>{
   return saveProduct
 }
 
-const getProducts = async (query: Partial<queryType>) => {
+const getProducts = async (query: any) => {
   const { category, price, rating, startDate, endDate } = query;
   const [min, max] = price.split("-");
 
