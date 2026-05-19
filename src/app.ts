@@ -18,9 +18,12 @@ app.use(cors({
 // passport middlewares after session
 app.use(passport.initialize())
 
-
 // route endpoint
-app.use('/api/v1',routes)
+// app.use('/api/v1',routes)
+  app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path}`);
+    next();
+  });
 
 app.get('/', (req, res) => {
   res.send('chonolux server is running!')
