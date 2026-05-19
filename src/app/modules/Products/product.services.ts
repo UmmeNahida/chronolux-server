@@ -1,4 +1,4 @@
-import { productInterface } from "./product.interface";
+import { productInterface, queryType } from "./product.interface";
 import { Product } from "./product.model"
 
 const createProduct = async(item: productInterface)=>{
@@ -6,8 +6,9 @@ const createProduct = async(item: productInterface)=>{
   return saveProduct
 }
 
-const getProducts = async (query: Partial<productInterface>) => {
-  const { category, minPrice, maxPrice, rating, startDate, endDate } = query;
+const getProducts = async (query: Partial<queryType>) => {
+  const { category, price, rating, startDate, endDate } = query;
+  const [min, max] = price.split("-");
 
   const filter: any = {};
 
@@ -17,10 +18,10 @@ const getProducts = async (query: Partial<productInterface>) => {
   }
 
   // price filter
-  if (minPrice || maxPrice) {
+  if (min || max) {
     filter.price = {};
-    if (minPrice) filter.price.$gte = Number(minPrice);
-    if (maxPrice) filter.price.$lte = Number(maxPrice);
+    if (min) filter.price.$gte = Number(min);
+    if (max) filter.price.$lte = Number(max);
   }
 
   // rating filter
