@@ -10,3 +10,12 @@ export interface productInterface {
   rating: number
   review: string
 }
+export interface queryType {
+  name: string
+  date: string
+  price: number
+  category: string
+  rating:string
+}
+
+
