@@ -10,11 +10,6 @@ const getProducts = async (query: any) => {
   const { category, price, rating, startDate, endDate } = query;
   const [min, max] = price?.split("-") || [];
 
-  console.log("price:", price);
-console.log("split result:", price?.split("-"));
-console.log("min:", min);
-console.log("max:", max);
-
   const filter: any = {};
 
   // category filter
