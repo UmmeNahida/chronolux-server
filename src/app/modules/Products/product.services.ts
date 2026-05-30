@@ -1,4 +1,4 @@
-import { productInterface, queryType } from "./product.interface";
+import { productInterface, ProductQuery } from "./product.interface";
 import { Product } from "./product.model"
 
 const createProduct = async(item: productInterface)=>{
@@ -6,7 +6,7 @@ const createProduct = async(item: productInterface)=>{
   return saveProduct
 }
 
-const getProducts = async (query: any) => {
+const getProducts = async (query: ProductQuery) => {
   const { category, price, rating, startDate, endDate } = query;
   const [min, max] = price?.split("-") || [];
 
