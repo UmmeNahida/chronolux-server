@@ -18,3 +18,5 @@ const moduleRoutes = [
 moduleRoutes.forEach((route)=>{
     routes.use(route.path, route.route)
 })
+
+// /api/v1/product, productRouter > / | /create | /delete | /update

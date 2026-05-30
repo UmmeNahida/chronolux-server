@@ -7,8 +7,9 @@ const createProduct = async(item: productInterface)=>{
 }
 
 const getProducts = async (query: any) => {
+  console.log("query:", query)
   const { category, price, rating, startDate, endDate } = query;
-  const [min, max] = price.split("-");
+  const [min, max] = price?.split("-") || [];
 
   const filter: any = {};
 

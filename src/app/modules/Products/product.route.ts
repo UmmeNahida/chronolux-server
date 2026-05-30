@@ -8,7 +8,7 @@ import * as controller from "./product.controller"
 const router = Router();
 
 router.post('/create',controller.createProduct)
-router.post('/',controller.getProducts)
+router.get('/',controller.getProducts)
 router.get("/:id", controller.getSingleProduct);
 router.patch("/update/:id", checkAuth("admin"), controller.updateProduct);
 router.delete("/delete/:id", checkAuth("admin"), controller.deleteProduct);
