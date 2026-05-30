@@ -19,7 +19,7 @@ app.use(cors({
 app.use(passport.initialize())
 
 // route endpoint
-// app.use('/api/v1',routes)
+  app.use('/api/v1', routes)
   app.use((req, res, next) => {
     console.log(`${req.method} ${req.path}`);
     next();
@@ -35,8 +35,5 @@ app.use((req:Request, res:Response)=>{
     message:"Page not fount"
   })
 })
-
-
-
 
 export default app;
