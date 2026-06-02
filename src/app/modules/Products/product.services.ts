@@ -8,9 +8,7 @@ const createProduct = async(item: productInterface)=>{
 
 const getProducts = async (query: ProductQuery) => {
   const { category, price, rating, startDate, endDate, page, limit } = query;
-  const pageNum = Number(page)
-  const limitNum = Number(limit)
-  const skip = (pageNum - 1) * limitNum;
+  const skip = (Number(page) - 1) * Number(limit);
   const [min, max] = price?.split("-") || [];
 
   const filter: any = {};
@@ -39,9 +37,20 @@ const getProducts = async (query: ProductQuery) => {
     if (endDate) filter.createdAt.$lte = new Date(endDate);
   }
 
-  const products = await Product.find(filter);
+  const [products, total] = await Promise.all([
+  Product.find(filter).skip(skip).limit(limit || 5),
+  Product.countDocuments(filter),
+]);
 
-  return products;
+return {
+  meta: {
+    page: Number(page),
+    limit,
+    total,
+    totalPage: Math.ceil(total / limit),
+  },
+  data: products,
+};
 };
 
 const productDetails = async(id:string)=>{
