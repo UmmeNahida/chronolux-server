@@ -12,8 +12,8 @@ export interface productInterface {
 }
 
 export interface ProductQuery {
-  page?: string;
-  limit?:string;
+  page?: number;
+  limit?:number;
   category?: string;
   price?: string;
   rating?: string;
