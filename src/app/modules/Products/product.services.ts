@@ -7,7 +7,10 @@ const createProduct = async(item: productInterface)=>{
 }
 
 const getProducts = async (query: ProductQuery) => {
-  const { category, price, rating, startDate, endDate } = query;
+  const { category, price, rating, startDate, endDate, page, limit } = query;
+  const pageNum = Number(page)
+  const limitNum = Number(limit)
+  const skip = (pageNum - 1) * limitNum;
   const [min, max] = price?.split("-") || [];
 
   const filter: any = {};
